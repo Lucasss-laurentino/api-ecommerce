@@ -22,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('createCategory', [AdmController::class, 'createCategory']);
 Route::get('getCategories', [UserController::class, 'getCategories']);
+Route::post('createSubCategory', [AdmController::class, 'createSubCategory']);
+Route::get('getSubCategories/{name}', [UserController::class, 'getSubCategories']);
+
