@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
+use App\Models\Product;
+use App\Models\Size;
 
 class AdmController extends Controller
 {
@@ -19,7 +21,8 @@ class AdmController extends Controller
             'banner2' => $pathImageTwo,
         ]);
 
-        return $category;
+        $categories = Category::all();
+        return $categories;
 
     }
 
@@ -32,7 +35,83 @@ class AdmController extends Controller
             'categories_id' => $idCategory->id,
         ]);
 
-        return $subCategory;
+        $subCategories = SubCategory::all();
+
+        return $subCategories;
+
+    }
+
+    public function createProduct(Request $request) {
+
+        $categoryId = Category::where('name', $request->category)->get()->first();
+        $subCategoryId = SubCategory::where('name', $request->subCategory)->get()->first();
+
+        $imageOne = $request->file('imageOne')->store($request->name, 'public');
+        $imageTwo = $request->file('imageTwo')->store($request->name, 'public');
+        
+        if($request->imageThree) {
+            $imageThree = $request->file('imageThree')->store($request->name, 'public');
+
+            $product = Product::create([
+                'name' => $request->name,
+                'manufacturer' => $request->manufacturer,
+                'price' => $request->price,
+                'categories_id' => $categoryId,
+                'subCategoies_id' => $subCategoryId,
+                'imageOne' =>  $imageOne,
+                'imageTwo' => $imageTwo,
+                'imageThree' => $imageThree
+            ]);
+    
+        } else {
+            $product = Product::create([
+                'name' => $request->name,
+                'manufacturer' => $request->manufacturer,
+                'price' => $request->price,
+                'categories_id' => $categoryId,
+                'subCategoies_id' => $subCategoryId,
+                'imageOne' =>  $imageOne,
+                'imageTwo' => $imageTwo,
+            ]);
+    
+        }
+
+        if($request->sizeP){
+            $size = Size::create([
+                'size' => 'P',
+                'quantity' => $request->qtdP,
+                'products_id' => $product->id,
+            ]);
+        }
+        if($request->sizeM){
+            $size = Size::create([
+                'size' => 'M',
+                'quantity' => $request->qtdM,
+                'products_id' => $product->id,
+            ]);
+        }
+        if($request->sizeG){
+            $size = Size::create([
+                'size' => 'G',
+                'quantity' => $request->qtdG,
+                'products_id' => $product->id,
+
+            ]);
+        }
+        if($request->sizeGG){
+            $size = Size::create([
+                'size' => 'GG',
+                'quantity' => $request->qtdGG,
+                'products_id' => $product->id,
+            ]);
+        }
+
+        $sizes = Size::query()->orderBy('id')->get();
+        $products = Product::query()->orderBy('id')->get();
+
+        return [$products, $sizes];
+
+
 
     }
 }
