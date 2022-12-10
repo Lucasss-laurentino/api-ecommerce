@@ -14,7 +14,7 @@ class Product extends Model
         'manufacturer',
         'price',
         'categories_id',
-        'subCategories_id',
+        'sub_categories_id',
         'imageOne',
         'imageTwo',
         'imageThree'

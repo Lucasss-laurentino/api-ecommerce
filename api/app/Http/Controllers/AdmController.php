@@ -43,33 +43,36 @@ class AdmController extends Controller
 
     public function createProduct(Request $request) {
 
-        $categoryId = Category::where('name', $request->category)->get()->first();
-        $subCategoryId = SubCategory::where('name', $request->subCategory)->get()->first();
+        $category = Category::where('name', $request->category)->get()->first();        
+        
+        $subCategory = SubCategory::where('categories_id', $category->id)->get()->first();
 
         $imageOne = $request->file('imageOne')->store($request->name, 'public');
         $imageTwo = $request->file('imageTwo')->store($request->name, 'public');
         
         if($request->imageThree) {
+
             $imageThree = $request->file('imageThree')->store($request->name, 'public');
 
             $product = Product::create([
                 'name' => $request->name,
                 'manufacturer' => $request->manufacturer,
                 'price' => $request->price,
-                'categories_id' => $categoryId,
-                'subCategoies_id' => $subCategoryId,
+                'categories_id' => $category->id,
+                'sub_categories_id' => $subCategory->id,
                 'imageOne' =>  $imageOne,
                 'imageTwo' => $imageTwo,
                 'imageThree' => $imageThree
             ]);
     
         } else {
+
             $product = Product::create([
                 'name' => $request->name,
                 'manufacturer' => $request->manufacturer,
                 'price' => $request->price,
-                'categories_id' => $categoryId,
-                'subCategoies_id' => $subCategoryId,
+                'categories_id' => $category->id,
+                'sub_categories_id' => $subCategory->id,
                 'imageOne' =>  $imageOne,
                 'imageTwo' => $imageTwo,
             ]);
@@ -110,8 +113,6 @@ class AdmController extends Controller
         $products = Product::query()->orderBy('id')->get();
 
         return [$products, $sizes];
-
-
 
     }
 }
