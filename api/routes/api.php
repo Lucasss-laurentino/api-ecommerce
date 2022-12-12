@@ -25,3 +25,6 @@ Route::get('getCategories', [UserController::class, 'getCategories']);
 Route::post('createSubCategory', [AdmController::class, 'createSubCategory']);
 Route::get('getSubCategories/{name}', [UserController::class, 'getSubCategories']);
 Route::post('createProduct', [AdmController::class, 'createProduct']);
+Route::get('getCategoryDefault', [UserController::class, 'getCategoryDefault']);
+Route::get('getProducts', [UserController::class, 'getProduct']);
+Route::get('getProductThisSubCategory/{id}', [UserController::class, 'getProductThisSubCategory']);

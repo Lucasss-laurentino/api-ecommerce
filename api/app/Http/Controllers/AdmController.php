@@ -22,7 +22,8 @@ class AdmController extends Controller
         ]);
 
         $categories = Category::all();
-        return $categories;
+
+        return [$category, $categories];
 
     }
 
@@ -45,7 +46,9 @@ class AdmController extends Controller
 
         $category = Category::where('name', $request->category)->get()->first();        
         
-        $subCategory = SubCategory::where('categories_id', $category->id)->get()->first();
+        $id = intval($request->subCategory);
+
+        $subCategory = SubCategory::where('id', $id)->get()->first();
 
         $imageOne = $request->file('imageOne')->store($request->name, 'public');
         $imageTwo = $request->file('imageTwo')->store($request->name, 'public');
