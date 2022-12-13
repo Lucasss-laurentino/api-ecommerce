@@ -28,3 +28,5 @@ Route::post('createProduct', [AdmController::class, 'createProduct']);
 Route::get('getCategoryDefault', [UserController::class, 'getCategoryDefault']);
 Route::get('getProducts', [UserController::class, 'getProduct']);
 Route::get('getProductThisSubCategory/{id}', [UserController::class, 'getProductThisSubCategory']);
+Route::get('getSizeThisProduct/{id}', [UserController::class, 'getSizeThisProduct']);
+Route::post('getPriceCor', [UserController::class, 'getPriceCor']);
