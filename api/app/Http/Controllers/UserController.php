@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\Cart;
 
 class UserController extends Controller
 {
@@ -78,5 +79,37 @@ class UserController extends Controller
         curl_close($curl); // fechando conexao
 
         return response()->Json(simplexml_load_string($response));
+    }
+
+    public function addToCart(Request $request) {
+
+        $productsThisUser = Cart::where('users_id', $request->userId)->get();
+        
+        $productInfo = $request->productInfo;
+        $size = $request->sizeSelected;
+
+        if($productsThisUser){
+            foreach($productsThisUser as $product){
+
+                if($product->products_id === $productInfo['id']){
+
+                    return 'false';
+            
+                }
+            
+            }
+    
+        }
+
+        $productToCart = Cart::create([
+
+            'products_id' => $productInfo['id'],
+            'sizes_id' => $size['id'],
+            'users_id' => $request->userId,
+
+        ]);
+
+        return $productToCart;
+
     }
 }
