@@ -29,5 +29,6 @@ Route::get('getCategoryDefault', [UserController::class, 'getCategoryDefault']);
 Route::get('getProducts', [UserController::class, 'getProduct']);
 Route::get('getProductThisSubCategory/{id}', [UserController::class, 'getProductThisSubCategory']);
 Route::get('getSizeThisProduct/{id}', [UserController::class, 'getSizeThisProduct']);
-Route::post('getPriceCor', [UserController::class, 'getPriceCor']);
+Route::post('getPriceCor', [UserController::class, 'getPriceCor']); // correios
 Route::post('addToCart', [UserController::class, 'addToCart']);
+Route::get('getProductsThisUser/{id}', [UserController::class, 'getProductsThisUser']);

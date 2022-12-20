@@ -112,4 +112,16 @@ class UserController extends Controller
         return $productToCart;
 
     }
+
+    public function getProductsThisUser($id) {
+
+        $carts = Cart::where('users_id', $id)->get();
+
+        foreach($carts as $cart) {
+
+            $products[] = Product::where('id', $cart->products_id)->get();
+        }
+        return response()->Json($products);
+
+    }
 }
