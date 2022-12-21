@@ -117,11 +117,27 @@ class UserController extends Controller
 
         $carts = Cart::where('users_id', $id)->get();
 
-        foreach($carts as $cart) {
+        if($carts->count() > 0){
 
-            $products[] = Product::where('id', $cart->products_id)->get();
+            foreach($carts as $cart) {
+
+                $products[] = Product::where('id', $cart->products_id)->get();
+            }
+            
+            return response()->Json($products);
+    
+        } else {
+            return $carts;
         }
-        return response()->Json($products);
 
+    }
+
+    public function deleteItemCart($id) {
+        $cart = Cart::where('products_id', $id)->get()->first();
+
+        $cart->delete();
+
+        
+        return 'delete';
     }
 }

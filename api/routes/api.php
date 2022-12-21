@@ -32,3 +32,4 @@ Route::get('getSizeThisProduct/{id}', [UserController::class, 'getSizeThisProduc
 Route::post('getPriceCor', [UserController::class, 'getPriceCor']); // correios
 Route::post('addToCart', [UserController::class, 'addToCart']);
 Route::get('getProductsThisUser/{id}', [UserController::class, 'getProductsThisUser']);
+Route::delete('deleteItemCart/{id}', [UserController::class, 'deleteItemCart']);
