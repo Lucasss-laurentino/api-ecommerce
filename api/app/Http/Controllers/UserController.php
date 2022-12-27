@@ -3,14 +3,62 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\Cart;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
+
+    public function createUser(Request $request) {
+
+        $user = User::where('email', $request->emailCreate)->get()->first();
+
+        if($user){
+        
+            return 'false';
+        
+        } else {
+            
+            $userCreated = User::create([
+                'email' => $request->emailCreate,
+                'password' => Hash::make($request->passwordCreate),
+            ]);
+
+            $token = $userCreated->createToken('token');
+
+            return [$userCreated, $token->plainTextToken];
+        }
+
+    }
+
+    public function login(Request $request) {
+        
+        $credentials = $request->only(['email', 'password']);
+
+        if(Auth::attempt($credentials)) {
+            
+            $user = User::where('email', $credentials['email'])->get()->first();
+            
+            $token = $user->createToken('token');
+
+            return [$user, $token->plainTextToken];
+        
+        } else {
+
+            return 'false';
+        
+        }
+
+
+    }
+
     public function getCategories() {
         
         $categories = Category::query()->orderBy('id')->get();

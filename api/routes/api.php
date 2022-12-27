@@ -33,3 +33,5 @@ Route::post('getPriceCor', [UserController::class, 'getPriceCor']); // correios
 Route::post('addToCart', [UserController::class, 'addToCart']);
 Route::get('getProductsThisUser/{id}', [UserController::class, 'getProductsThisUser']);
 Route::delete('deleteItemCart/{id}', [UserController::class, 'deleteItemCart']);
+Route::post('createUser', [UserController::class, 'createUser']);
+Route::post('login', [UserController::class, 'login']);
