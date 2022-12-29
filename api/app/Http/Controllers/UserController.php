@@ -9,6 +9,7 @@ use App\Models\SubCategory;
 use App\Models\Product;
 use App\Models\Size;
 use App\Models\Cart;
+use App\Models\Address;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -187,5 +188,35 @@ class UserController extends Controller
 
         
         return 'delete';
+    }
+
+    public function createAddress(Request $request) {
+
+        $address = Address::where('user_id', $request->user_id);
+
+        if($address){
+            $address->delete();
+        }
+
+        $newAddress = Address::create([
+
+            'cep' => $request->cep,
+            'state' => $request->state,
+            'city' => $request->city,
+            'district' => $request->district,
+            'street' => $request->street,
+            'number' => $request->number,
+            'user_id' => $request->user_id,
+        ]);
+
+        return $newAddress;
+    }
+
+    public function getAddress($id) {
+    
+        $address = Address::where('user_id', $id)->get()->first();
+        
+        return $address;
+    
     }
 }

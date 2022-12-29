@@ -35,3 +35,5 @@ Route::get('getProductsThisUser/{id}', [UserController::class, 'getProductsThisU
 Route::delete('deleteItemCart/{id}', [UserController::class, 'deleteItemCart']);
 Route::post('createUser', [UserController::class, 'createUser']);
 Route::post('login', [UserController::class, 'login']);
+Route::post('createAddress', [userController::class, 'createAddress']);
+Route::get('getAddress/{id}', [userController::class, 'getAddress']);
