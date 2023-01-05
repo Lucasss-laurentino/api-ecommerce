@@ -23,7 +23,7 @@ class UserController extends Controller
 
         if($user){
         
-            return 'false';
+            return response()->Json('', 412);
         
         } else {
             
@@ -36,7 +36,7 @@ class UserController extends Controller
 
             return [$userCreated, $token->plainTextToken];
         }
-
+        
     }
 
     public function login(Request $request) {
@@ -52,9 +52,7 @@ class UserController extends Controller
             return [$user, $token->plainTextToken];
         
         } else {
-
-            return 'false';
-        
+            return response()->Json('Unauthorized', 401);
         }
 
 
